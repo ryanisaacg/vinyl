@@ -2,17 +2,21 @@
 <html>
   <head> </head>
   <body>
-    <p id="status-indicator"> </p>
-    <form action="/media" method=POST enctype="multipart/form-data">
+    <p id="status-indicator"></p>
+    <form action="/media" method="POST" enctype="multipart/form-data">
       <label for="music">Upload some music:</label>
       <input type="file" id="music" name="music" multiple />
       <input type="submit" value="Upload" />
     </form>
     <script>
       const urlParams = new URLSearchParams(window.location.search);
-      const files = urlParams.get('files');
+      const files = urlParams.get("files");
+      const failed = urlParams.get("failed");
+      const existing = urlParams.get("existing");
       if (files != null) {
-        document.getElementById('status-indicator').innerText = `Uploaded ${files} successfully.`;
+        document.getElementById(
+          "status-indicator"
+        ).innerText = `Uploaded ${files} successfully. ${failed} failed. ${existing} already existed.`;
       }
     </script>
   </body>
