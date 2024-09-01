@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <p id="status-indicator"> </p>
+    <form action="/media" method=POST enctype="multipart/form-data">
+      <label for="music">Upload some music:</label>
+      <input type="file" id="music" name="music" multiple />
+      <input type="submit" value="Upload" />
+    </form>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const files = urlParams.get('files');
+      if (files != null) {
+        document.getElementById('status-indicator').innerText = `Uploaded ${files} successfully.`;
+      }
+    </script>
+  </body>
+</html>
