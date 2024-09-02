@@ -9,12 +9,13 @@ import (
 
 func main() {
 	mediaRoot := os.Args[1]
+	refreshToken := os.Args[2]
+	refreshUrl := fmt.Sprintf("http://127.0.0.1:32400/library/sections/29/refresh?X-Plex-Token=%s", refreshToken)
 
 	// Upload media
 	http.HandleFunc("/media", func(w http.ResponseWriter, r *http.Request) {
 		r.ParseMultipartForm(1024 * 1024 * 16)
 		multipartFormData := r.MultipartForm
-		fmt.Println(multipartFormData.File)
 		files := 0
 		existing := 0
 		failed := 0
@@ -50,8 +51,12 @@ func main() {
 			}
 			files += 1
 		}
-		fmt.Println(files)
 		http.Redirect(w, r, fmt.Sprintf("?files=%d&failed=%d&existing=%d", files, failed, existing), http.StatusSeeOther)
+		w.Write([]byte("Redirecting - if you aren't redirected, <a href=\"/\"> click here </a>"))
+	})
+	http.HandleFunc("/refresh", func(w http.ResponseWriter, r *http.Request) {
+		http.Get(refreshUrl)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		w.Write([]byte("Redirecting - if you aren't redirected, <a href=\"/\"> click here </a>"))
 	})
 

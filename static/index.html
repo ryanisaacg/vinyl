@@ -10,7 +10,7 @@
       #status-indicator {
         font-style: italic;
       }
-      #media-form {
+      form {
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -22,6 +22,7 @@
   </head>
   <body>
     <p id="status-indicator"></p>
+    <h1>Upload New Files</h1>
     <form
       id="media-form"
       action="/media"
@@ -31,6 +32,15 @@
       <label for="music">Upload some music:</label>
       <input type="file" id="music" name="music" multiple />
       <input id="upload" type="submit" value="Upload" />
+    </form>
+    <h1>Refresh the library</h1>
+    <form
+      id="media-form"
+      action="/refresh"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <input type="submit" value="Refresh" />
     </form>
     <script>
       const urlParams = new URLSearchParams(window.location.search);
